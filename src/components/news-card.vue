@@ -1,6 +1,6 @@
 <template>
     <div class="product-dialog-wrap">
-        <el-dialog :title="titleName" :visible.sync="isVisible">
+        <el-dialog :title="titleName" :visible.sync="isVisible" >
         <el-form :model="form" label-position="left">
             <el-row>
                 <el-col :span="23">
@@ -186,19 +186,14 @@ export default {
             this.form[name] = url;
         },
         insertQuillImage(path){
-              console.log(this.$refs);
-              console.log(this.$refs.myQuillEditor);
-              let quill = this.$refs.myQuillEditor.quill
-              // // 如果上传成功
-                // 获取光标所在位置
-                let length = quill.getSelection().index
-                // 插入图片  dt.url为服务器返回的图片地址
-                quill.insertEmbed(length, 'image', path)
-                // 调整光标到最后
-                quill.setSelection(length + 1)
-              // loading加载隐藏
-              // this.quillUpdateImg = false
-        }
+            let quill = this.$refs.myQuillEditor.quill;
+            // 获取光标所在位置
+            let length = quill.getSelection().index;
+            // 插入图片  dt.url为服务器返回的图片地址
+            quill.insertEmbed(length, 'image', path)
+            // 调整光标到最后
+            quill.setSelection(length + 1)
+        },
     }
 }
 </script>
