@@ -145,6 +145,7 @@ export default {
         }
     },
     computed:{
+        // 弹框标题---有小小bug，只能初始化一次。但不影响使用
         titleName(){
             return this.proName === ''? '添加产品':`${this.proName}产品修改信息`;
         }
@@ -165,6 +166,7 @@ export default {
         this.form = this.proForm;
     },
     methods:{
+        // 确定后提交表单
         onSure(bol,pid){
             const url = bol ? `/products/add` : `/products/${pid}/change_info`;
             const text = bol ? '添加' : '修改';
@@ -180,6 +182,7 @@ export default {
                 this.$emit('showProduct');
             })
         },
+        // 子组件触发
         handleUrl(url,name,fileName){
             this.form[name] = url;
         }

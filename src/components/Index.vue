@@ -1,6 +1,7 @@
 <template>
     <div class="index-wrap">
       <el-container class="main">
+        <!-- 上面导航头 -->
         <el-header class="main-header">
           <div class="title-wrap">
             <div>
@@ -17,6 +18,7 @@
           </div>
         </el-header>
          <el-container>
+           <!-- 左边菜单 -->
            <el-aside width="200px">
                 <el-menu :class="'menu'"
                           :default-active="editableTabsValue"
@@ -62,6 +64,7 @@
               </el-tab-pane>
             </el-tabs>
             </el-main>
+            <!-- 页脚 -->
             <el-footer class="main-footer" height="35px">© WindIIOTInventory.com - 后台管理系统</el-footer>
           </el-container>
         </el-container>
@@ -78,6 +81,7 @@ import Sale from './sale';
 import News from './news';
 import Personal from './personal';
 export default {
+  // 在主页面上导入组件
     components: {
       Product,
       Home,
@@ -86,6 +90,7 @@ export default {
       Personal,
     },
     data() {
+      // 菜单对象
        const menuMap=[
          {
             value: '0',
@@ -118,17 +123,19 @@ export default {
             tabWidth: 200,
             test1: 1,
             editableTabsValue:'2-1',
+            editableTabs: [],
             intelval: null,
             changeComponent:'Product',
             menuMap,
-            editableTabs: [],
             tabIndex: 1,
         };
     },
+    // 一打开就是产品管理菜单
     mounted(){
       this.addMenuItem('2-1');
     },
     methods: {
+      // 添加菜单tab页
         addMenuItem(index){
          this.menuMap.forEach(item=>{
            if(item.value === index){
@@ -145,6 +152,7 @@ export default {
            }
          })
         },
+        // 退出登录
         outIndex(){
            this.$confirm('请问您是否要退出登录吗？', '提示', {
             confirmButtonText: '确定',
@@ -153,12 +161,14 @@ export default {
           }).then(() => {
             this.post(`/users/logout`).then(res=>{
               location.href="./index.html";
+              // 清除session
               window.sessionStorage.clear();
             }).catch(e=>{
               this.$error('退出失败，请重新尝试');
             })
           })
         },
+        // 删掉菜单tab页
         removeTab(targetName) {
           let tabs = this.editableTabs;
           let activeName = this.editableTabsValue;

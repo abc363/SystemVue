@@ -1,6 +1,7 @@
 <template>
     <div class="news-wrap">
     <div class="table-head-wrap">
+      <!-- 搜索表单 -->
         <el-form :model="searchForm" label-position="left">
            <el-row>
                 <el-col :span="8">
@@ -34,6 +35,7 @@
            </el-row>
         </el-form>
     </div>
+    <!-- 搜索列表数据 -->
   <el-table
     v-loading="loading"
     :data="tableData"
@@ -109,6 +111,7 @@
       </template>
     </el-table-column>
         </el-table>
+        <!-- 分页按钮 -->
          <el-pagination
          v-if="pageShow"
         :current-page.sync="currentPage"
@@ -118,6 +121,7 @@
         layout="total, prev, pager, next, jumper"
         :total="totalNum">
         </el-pagination>
+        <!-- 新闻新增修改弹框 -->
         <NewsDialog :dialogFormVisible="dialogFormVisible" :newsName="newsName" :isUpload="isUpload" @showNews="showNews" :num="num"
         :newsForm="newForm" :isAdd="isAdd" @changeVisiable="changeV" @changeCurrent="changeCurrent(totalNum,true)"></NewsDialog>
     </div>
@@ -133,6 +137,7 @@ export default {
       return {
         tableData: [],
         typeList:[],
+        // 搜索表单
         searchForm:{
             new_title:'',
             new_type:'',
@@ -143,6 +148,7 @@ export default {
         newsName:'',
         num:0,
         totalNum:0,
+        // 新闻表单
         newForm:{
          new_title: '',
          new_content: '',
@@ -164,6 +170,7 @@ export default {
       }
     },
     watch:{
+      // 监听分页刷新
       currentPage(newVal){
         if(this.isSearch){
           this.searchForm.startPage = this.searchForm.pageSize*(newVal-1);
@@ -182,6 +189,7 @@ export default {
         this.showNews();
     },
     methods:{
+      // 重置按钮
         onReset(){
           this.searchForm = {
             new_title:'',
@@ -197,6 +205,7 @@ export default {
             this.currentPage = 1;
           }
         },
+        // 搜索按钮
         onSearch(){
           this.post('news/search',this.searchForm).then(res=>{
             this.tableData = res.data.tableData;
@@ -206,6 +215,7 @@ export default {
             this.$error('查询失败！');
           })
         },
+        // 主要：获取列表数据
         showNews(){
             this.get("/news/show",this.defaultTable).then((res)=>{
                 this.tableData = res.tableData;
@@ -223,6 +233,7 @@ export default {
         changeV(res){
           this.dialogFormVisible = res;
         },
+        // 编辑根据nid拉取数据
         handleEdit(nid,row){
           this.get(`/news/${nid}/showNews`).then(res => {
             this.isAdd = this.isUpload = false;
@@ -234,6 +245,7 @@ export default {
             this.$error(`获取信息失败，${e}`);
           })
         },
+        // 删除新闻信息
         handleDelete(id,row){
           this.$confirm(`请问您确定删除该产品${id}吗？`, '提示', {
             confirmButtonText: '确定',
@@ -249,11 +261,13 @@ export default {
             })
           });
           },
+          // 新增新闻
           addNews(){
             this.newForm = {};
             this.isAdd = true;
             this.dialogFormVisible = true;
           },
+          // 子组件触发，新增后分页时候需要改变
           changeCurrent(num,type){
               num = type ? num+1 : num-1;
               this.currentPage = Math.floor(num/(this.defaultTable.pageSize+1))+1;

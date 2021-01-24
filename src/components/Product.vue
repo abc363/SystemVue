@@ -1,6 +1,7 @@
 <template>
     <div class="product-wrap">
     <div class="table-head-wrap">
+      <!-- 搜索表单以及其他按钮 -->
         <el-form :model="searchForm" label-position="left">
            <el-row>
                 <el-col :span="5">
@@ -41,6 +42,7 @@
            </el-row>
         </el-form>
     </div>
+    <!-- 表格列表 -->
         <el-table
     v-loading="loading"
     :data="tableData"
@@ -111,6 +113,7 @@
       </template>
     </el-table-column>
         </el-table>
+        <!-- 分页按钮 -->
          <el-pagination
          v-if="pageShow"
         :current-page.sync="currentPage"
@@ -120,6 +123,7 @@
         layout="total, prev, pager, next, jumper"
         :total="totalNum">
         </el-pagination>
+        <!-- 产品新增修改弹框 -->
         <ProductDialog :dialogFormVisible="dialogFormVisible" :proName="proName" :isUpload="isUpload" @showProduct="showPro" :num="num"
         :proForm="productForm" :isAdd="isAdd" @changeVisiable="changeV" @changeCurrent="changeCurrent(totalNum,true)"></ProductDialog>
     </div>
@@ -135,6 +139,7 @@ export default {
       return {
         tableData: [],
         typeList:[],
+        // 搜索表单
         searchForm:{
             pro_State:'',
             pro_Name:'',
@@ -146,6 +151,7 @@ export default {
         proName:'',
         num:0,
         totalNum:0,
+        // 产品表单
         productForm:{
           pro_Name:'',
           pro_Type:'',
@@ -182,6 +188,7 @@ export default {
       }
     },
     watch:{
+      // 监听currentPage改变就重新请求渲染
       currentPage(newVal){
         if(this.isSearch){
           this.searchForm.startPage = this.searchForm.pageSize*(newVal-1);
@@ -200,6 +207,7 @@ export default {
         this.showPro();
     },
     methods:{
+      // 重置按钮
         onReset(){
           this.searchForm = {
             pro_State:'',
@@ -216,6 +224,7 @@ export default {
             this.currentPage = 1;
           }
         },
+        // 搜索按钮
         onSearch(){
           this.post('products/search',this.searchForm).then(res=>{
             this.tableData = res.data.tableData;
@@ -225,6 +234,7 @@ export default {
             this.$error('查询失败！');
           })
         },
+        // 重要：拉回请求产品数据
         showPro(){
             this.get("/products/show",this.defaultTable).then((res)=>{
                 this.tableData = res.tableData;
@@ -242,6 +252,7 @@ export default {
         changeV(res){
           this.dialogFormVisible = res;
         },
+        // 编辑按钮根据pid获取信息
         handleEdit(pid,row){
           this.get(`/products/${pid}/showPro`).then(res => {
             this.isAdd = this.isUpload = false;
@@ -253,6 +264,7 @@ export default {
             this.$error(`获取信息失败，${e}`);
           })
         },
+        // 删除某个产品信息
         handleDelete(id,row){
           this.$confirm(`请问您确定删除该产品${id}吗？`, '提示', {
             confirmButtonText: '确定',
@@ -268,11 +280,13 @@ export default {
             })
           });
           },
+          // 添加产品
           addProduct(){
             this.productForm = {};
             this.isAdd = true;
             this.dialogFormVisible = true;
           },
+          // 子组件触发
           changeCurrent(num,type){
               num = type ? num+1 : num-1;
               this.currentPage = Math.floor(num/(this.defaultTable.pageSize+1))+1;

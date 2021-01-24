@@ -92,6 +92,7 @@ export default {
         }
     },
     methods:{
+        // 上传过程中
         onProgress(event, file, fileList){
             this.loading = this.$loading({
                 lock: true,
@@ -100,6 +101,7 @@ export default {
                 background: 'rgba(0, 0, 0, 0.7)'//遮罩层背景色
             });
         },
+        // 上传成功后
         handleSuccess(response, file, fileList){
             this.loading.close();
             const path = response.data.path;
@@ -117,6 +119,7 @@ export default {
         onError(){
             this.$error("上传失败");
         },
+        // 上传文件之前
         beforeUpload(file,fileList){
             this.isLt2M = file.size / 1024 / 1024 > 200;
             if(this.isLt2M){
@@ -124,10 +127,13 @@ export default {
             }
             return !this.isLt2M;
         },
+        // 删除文件之前
         beforeRemove(file, fileList) {
             return this.$confirm(`请问您确定移除 ${ file.name }？`);
         },
+        // 删除文件
         handleRemove(){
+            // 判断是产品还是新闻，修改url和delForm
             const url = this.field === 'new_image' ? '/news/deleteFile':'/products/deleteFile';
             if(this.field === 'new_image'){
                 this.delForm.nid = this.nid;
@@ -142,6 +148,7 @@ export default {
                     this.$error(`删除失败！${e}`);
                 })
         },
+        // 预览文件
         onPreview(){
             window.open(this.uploadUrl);
         }

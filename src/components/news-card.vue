@@ -41,6 +41,7 @@
                 </el-col>
                  <el-col :span="23">
                     <el-form-item label="内容" label-width="40px">
+                        <!-- 隐藏此组件，让富文本编辑器图片上传时触发 -->
                        <UploadFile class="news-upload" :isNewContentUpload="true" 
                        @insertQuillImage="insertQuillImage" :limit="100" nid="0"></UploadFile>
                          <quill-editor
@@ -63,10 +64,12 @@
 import Vue from 'vue';
 import UploadFile from './uploadFile';
 import VueQuillEditor from 'vue-quill-editor';
+// 富文本编辑器
 Vue.use(VueQuillEditor);
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
+// 自定义菜单
 const toolbarOptions = [
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
       ['blockquote', 'code-block'],
@@ -119,6 +122,7 @@ export default {
             formLabelWidth:'100',
             isVisible:false,
             form:{},
+            // 富文本编辑器自定易菜单
             editorOption: {
                 placeholder: '请输入新闻内容.....',
                 modules: {
@@ -128,6 +132,7 @@ export default {
                       // 监听图片上传功能
                         'image': function (value) {
                             if (value) {
+                                // 自动触发隐藏组件的上传功能
                                 document.querySelector('.news-upload .el-upload__input').click()
                             } else {
                                 this.quill.format('image', false);
@@ -160,6 +165,7 @@ export default {
         this.form = this.newsForm;
     },
     methods:{
+        // 确定按钮
         onSure(bol,nid){
            this.loading = this.$loading({
                 lock: true,
@@ -185,6 +191,7 @@ export default {
         handleUrl(url,name,fileName){
             this.form[name] = url;
         },
+        // 自动触发后插入图片到富文本中
         insertQuillImage(path){
             let quill = this.$refs.myQuillEditor.quill;
             // 获取光标所在位置

@@ -85,6 +85,7 @@ export default {
                 this.tableData = res;
             })
         },
+        // 现在是哪个用户都可以删除，删除用户一般只有超级管理员才行，有待实现该功能
         handleDelete(uid){
             this.$confirm('请问您确定删除该用户吗？', '提示', {
                 confirmButtonText: '确定',
@@ -99,6 +100,7 @@ export default {
                 })
             });
         },
+        // 修改自己的密码
         changePassword(){
             if(this.updateForm.newPassword !== this.updateForm.confirmPassword){
                 return this.$error('您输入的确认密码不一致');

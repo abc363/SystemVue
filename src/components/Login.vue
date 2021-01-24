@@ -39,7 +39,7 @@
               </div>
             </div>
       </el-main>
-      <el-footer class="login-footer">Copyright 2019-2020 windiiot.com 版权所有 佛山市微风科技有限公司</el-footer>
+      <el-footer class="login-footer">Copyright 2019-2021 windiiot.com 版权所有 佛山市微风科技有限公司</el-footer>
     </el-container>
   </div>
 </template>
@@ -76,16 +76,15 @@ export default {
         this.loginForm.password = sha256(this.loginForm.password);
         this.post('/users/login',this.loginForm).then(res=>{
           this.$success("登录成功！");
-          // 将token存放在会话存储机制中（在当前网站打开期间生效）
-          // window.sessionStorage.setItem("token",res.data.token);
+          // 将username存放在会话存储机制中（在当前网站打开期间生效）
           window.sessionStorage.setItem("username",res.data.username);
-          // loading.close();
           this.$router.push("/index");
         }).catch(e=>{
           this.$error("登录失败！请重新尝试");
         })
       })
     },
+    // 跳转注册页
     toResigter(){
       this.$router.push("/resigter");
     }
