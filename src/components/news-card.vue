@@ -36,13 +36,13 @@
                   <el-col :span="23">
                     <el-form-item label="正图" label-width="40px">
                         <UploadFile :imageUrl="form.new_image" @handleUrl="handleUrl"
-                         field="new_image" :pid="num" :visiable="isVisible"></UploadFile>
+                         field="new_image" :nid="num" :visiable="isVisible"></UploadFile>
                     </el-form-item>
                 </el-col>
                  <el-col :span="23">
                     <el-form-item label="内容" label-width="40px">
                        <UploadFile class="news-upload" :isNewContentUpload="true" 
-                       @insertQuillImage="insertQuillImage" :limit="100"></UploadFile>
+                       @insertQuillImage="insertQuillImage" :limit="100" nid="0"></UploadFile>
                          <quill-editor
                             v-model="form.new_content"
                             :options="editorOption" 

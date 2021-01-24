@@ -39,6 +39,9 @@ export default {
             type:String,
             default:'',
         },
+        nid:{
+            type:Number,
+        },
         pid:{
             type:Number,
         },
@@ -65,7 +68,6 @@ export default {
             url:"http://120.55.95.122:8080/products/uploadFile",
             delForm:{
                 filePath:'',
-                pid:this.pid,
                 fileName:this.field,
             },
             isLt2M:false,
@@ -126,7 +128,13 @@ export default {
             return this.$confirm(`请问您确定移除 ${ file.name }？`);
         },
         handleRemove(){
-             this.post('/products/deleteFile',this.delForm).then(res=>{
+            const url = this.field === 'new_image' ? '/news/deleteFile':'/products/deleteFile';
+            if(this.field === 'new_image'){
+                this.delForm.nid = this.nid;
+            }else{
+                this.delForm.pid = this.pid;
+            }
+             this.post(url,this.delForm).then(res=>{
                     this.$success('删除成功！');
                     this.$emit('handleUrl','',this.field,'');
 
