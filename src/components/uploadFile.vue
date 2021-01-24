@@ -62,10 +62,10 @@ export default {
         return{
             fileList:[],
             uploadUrl:'',
-            // baseUrl:"http://backend.windiiot.com/",
-            baseUrl:"http://120.55.95.122:8080/",
-            // url:"http://backend.windiiot.com/products/uploadFile",
-            url:"http://120.55.95.122:8080/products/uploadFile",
+            baseUrl:"http://backend.windiiot.com/",
+            // baseUrl:"http://120.55.95.122:8080/",
+            url:"http://backend.windiiot.com/products/uploadFile",
+            // url:"http://120.55.95.122:8080/products/uploadFile",
             delForm:{
                 filePath:'',
                 fileName:this.field,
