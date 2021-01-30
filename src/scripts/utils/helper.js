@@ -1,9 +1,11 @@
 import axios from 'axios';
-import { TimeSelect } from 'element-ui';
+const baseURL = 'http://backend.windiiot.com';
+export let signature = "http://windiiot.oss-cn-beijing.aliyuncs.com/";
+
+export let uploadFileUrl = baseURL+"/products/uploadFile";
 // 设置请求超时时间和域名  创建axios实例
 const instance = axios.create({
-  baseURL: 'http://backend.windiiot.com/',
-  // baseURL: 'http://120.55.95.122:8080/',
+  baseURL: baseURL,
   timeout: 15000
 })
 

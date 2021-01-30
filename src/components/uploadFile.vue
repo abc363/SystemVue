@@ -3,7 +3,7 @@
     <el-upload
         class="upload-demo"
         ref="uploadAdd"
-        :action="url"
+        :action="uploadFileUrl"
         :limit="limit"
         :on-error="onError"
         :on-preview="onPreview"
@@ -21,6 +21,7 @@
 </div>
 </template>
 <script>
+import { uploadFileUrl,signature } from '../scripts/utils/helper.js';
 export default {
     props:{
         fileName:{
@@ -62,17 +63,14 @@ export default {
         return{
             fileList:[],
             uploadUrl:'',
-            baseUrl:"http://backend.windiiot.com/",
-            // baseUrl:"http://120.55.95.122:8080/",
-            url:"http://backend.windiiot.com/products/uploadFile",
-            // url:"http://120.55.95.122:8080/products/uploadFile",
+            uploadFileUrl,
             delForm:{
                 filePath:'',
                 fileName:this.field,
             },
             isLt2M:false,
             loading:'',
-            signature:"http://windiiot.oss-cn-beijing.aliyuncs.com/",
+            signature,
         }
     },
     watch:{

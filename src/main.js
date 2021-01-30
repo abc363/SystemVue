@@ -10,7 +10,7 @@ import './plugins/element.js'
 import './assets/css/global.css'
 import './assets/icon/iconfont.css'
 import axios from 'axios'
-import  {get , post } from "./scripts/utils/helper.js"  //  form 后就加上你文件的地址
+import  {get,post,signature } from "./scripts/utils/helper.js"  //  form 后就加上你文件的地址
 Vue.prototype.get = get;
 Vue.prototype.post = post ;
 Vue.prototype.$error = function (msg) {
@@ -19,10 +19,7 @@ Vue.prototype.$error = function (msg) {
 Vue.prototype.$success = function (msg) {
   this.$message({message: msg,type:'success',offset:80,duration:3000})
 }
-Vue.prototype.$domain = "http://windiiot.oss-cn-beijing.aliyuncs.com/";
-// 配置请求的根路径
-axios.defaults.baseURL = 'http://backend.windiiot.com/'
-// axios.defaults.baseURL = 'http://120.55.95.122:8080/'
+Vue.prototype.$domain = signature;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 axios.defaults.withCredentials = true;
 axios.defaults.crossDomain = true;
